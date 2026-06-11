@@ -1,9 +1,9 @@
-const CACHE_NAME = "tinh-tien-tro-416-v27-transfer-content";
+const CACHE_NAME = "tinh-tien-tro-416-v28-qr-preload-fix";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
-  "./app-v27.js?v=27",
+  "./app-v28.js?v=28",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
