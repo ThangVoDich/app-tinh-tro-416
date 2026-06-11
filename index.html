@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>App Tính Trọ 416 Phan Huy Ích</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">PWA offline</p>
+        <h1>App Tính Trọ<br><span>416 Phan Huy Ích</span></h1>
+        <p class="sub">Lưu theo số phòng, tên người thuê, lập hóa đơn theo tháng. Created by ThangVoDich. <b>Bản v18</b></p>
+      </div>
+      <span id="onlineStatus" class="pill">Đang kiểm tra...</span>
+    </header>
+
+    <nav class="tabs" aria-label="Chức năng">
+      <button class="tab active" data-screen="monthlyScreen">Tháng mới</button>
+      <button class="tab" data-screen="roomsScreen">Phòng</button>
+      <button class="tab" data-screen="invoiceScreen">Hóa đơn</button>
+      <button class="tab" data-screen="imageScreen">Ảnh hóa đơn</button>
+      <button class="tab" data-screen="historyScreen">Lịch sử</button>
+      <button class="tab" data-screen="backupScreen">Backup</button>
+    </nav>
+
+    <section id="roomsScreen" class="screen">
+      <div class="grid two">
+        <section class="card">
+          <div class="section-head">
+            <h2>Thêm / sửa phòng</h2>
+            <button id="resetRoomFormBtn" class="ghost small">Form mới</button>
+          </div>
+
+          <input type="hidden" id="roomEditId" />
+
+          <label>Số phòng</label>
+          <input id="roomNumber" type="text" placeholder="VD: 101, A2, Phòng 3" />
+
+          <label>Tên chủ phòng / người thuê</label>
+          <input id="tenantName" type="text" placeholder="VD: Anh Nam" />
+
+          <label>Số điện thoại / ghi chú</label>
+          <input id="tenantNote" type="text" placeholder="Không bắt buộc" />
+
+          <div class="grid two compact">
+            <div>
+              <label>Tiền phòng</label>
+              <input id="roomRent" class="money-input" type="text" inputmode="numeric" placeholder="VD: 2500000" />
+            </div>
+            <div>
+              <label>Giá điện / số</label>
+              <input id="electricRate" class="money-input" type="text" inputmode="numeric" placeholder="VD: 4000" />
+            </div>
+          </div>
+
+          <div class="grid two compact">
+            <div>
+              <label>Giá nước / khối</label>
+              <input id="waterRate" class="money-input" type="text" inputmode="numeric" placeholder="VD: 15000" />
+            </div>
+            <div>
+              <label>Tiền rác / phí cố định</label>
+              <input id="fixedFee" class="money-input" type="text" inputmode="numeric" placeholder="VD: 50000" />
+            </div>
+          </div>
+
+          <label>Phí wifi (nếu có)</label>
+          <input id="wifiFee" class="money-input" type="text" inputmode="numeric" placeholder="VD: 100000" />
+
+          <h3>Phí khác mặc định</h3>
+          <div id="defaultFeesList" class="fee-list"></div>
+          <div class="input-row">
+            <input id="defaultFeeName" type="text" placeholder="Tên phí, VD: Wifi" />
+            <input id="defaultFeeAmount" class="money-input" type="text" inputmode="numeric" placeholder="Số tiền" />
+            <button id="addDefaultFeeBtn" class="secondary">Thêm phí</button>
+          </div>
+
+          <button id="saveRoomBtn" class="primary full">Lưu phòng</button>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>Danh sách phòng</h2>
+            <span id="roomCount" class="muted"></span>
+          </div>
+          <div id="roomsList" class="room-list"></div>
+          <p id="emptyRooms" class="empty">Chưa có phòng. Thêm phòng đầu tiên ở form bên trái.</p>
+        </section>
+      </div>
+    </section>
+
+
+    <section id="monthlyScreen" class="screen active">
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <h2>Tính tiền tháng mới</h2>
+            <p class="hint">Chọn tháng, app tự lấy số điện/nước kỳ trước từ hóa đơn gần nhất. Bạn chỉ cần nhập số điện/nước tháng này cho từng phòng đang ở.</p>
+          </div>
+          <div class="monthly-actions">
+            <label>Tháng cần tính</label>
+            <select id="monthlyMonth"></select>
+          </div>
+        </div>
+
+        <div class="button-row wrap no-top">
+          <button id="suggestNextMonthBtn" class="ghost">Gợi ý tháng mới</button>
+          <button id="reloadMonthlyBtn" class="ghost">Tải lại dữ liệu cũ</button>
+                  </div>
+
+        <div id="monthlyDebug" class="monthly-debug"></div>
+        <div id="monthlyRoomsList" class="monthly-list"></div>
+        <p id="emptyMonthlyRooms" class="empty">Chưa có dữ liệu kỳ trước. Vào tab Hóa đơn, tạo hình & lưu hóa đơn gốc trước; sau đó tab Tháng mới mới hiện phòng.</p>
+      </section>
+    </section>
+
+    <section id="invoiceScreen" class="screen">
+      <div class="grid two">
+        <section class="card">
+          <h2>Lập hóa đơn tháng</h2>
+
+          <label>Chọn phòng</label>
+          <select id="invoiceRoomSelect"></select>
+
+          <label>Tháng hóa đơn</label>
+          <select id="invoiceMonth"></select>
+
+          <div class="grid two compact">
+            <div>
+              <label>Điện kỳ trước</label>
+              <input id="electricOld" type="number" min="0" inputmode="decimal" placeholder="VD: 120" />
+            </div>
+            <div>
+              <label>Điện kỳ này</label>
+              <input id="electricNew" type="number" min="0" inputmode="decimal" placeholder="VD: 180" />
+            </div>
+          </div>
+
+          <div class="grid two compact">
+            <div>
+              <label>Nước kỳ trước</label>
+              <input id="waterOld" type="number" min="0" inputmode="decimal" placeholder="VD: 30" />
+            </div>
+            <div>
+              <label>Nước kỳ này</label>
+              <input id="waterNew" type="number" min="0" inputmode="decimal" placeholder="VD: 36" />
+            </div>
+          </div>
+
+          <div class="wifi-box">
+            <label class="check-line">
+              <input id="invoiceHasWifi" type="checkbox" />
+              <span id="invoiceWifiLabel">Có wifi</span>
+            </label>
+            <p class="hint" id="invoiceWifiHint">Nếu tích, phí wifi sẽ được đưa vào hóa đơn.</p>
+          </div>
+
+
+          <h3>Phí khác tháng này</h3>
+          <div id="invoiceFeesList" class="fee-list"></div>
+          <div class="input-row">
+            <input id="invoiceFeeName" type="text" placeholder="Tên phí, VD: Giữ xe" />
+            <input id="invoiceFeeAmount" class="money-input" type="text" inputmode="numeric" placeholder="Số tiền" />
+            <button id="addInvoiceFeeBtn" class="secondary">Thêm</button>
+          </div>
+
+          <label>Ghi chú hóa đơn</label>
+          <textarea id="invoiceNote" rows="3" placeholder="VD: Thanh toán trước ngày 05..."></textarea>
+
+          <div class="button-row">
+            <button id="makeImageBtn" class="primary">Tạo hình & lưu hóa đơn</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>Xem trước hóa đơn</h2>
+            <span id="invoiceStatus" class="muted"></span>
+          </div>
+
+          <div id="invoicePreview" class="invoice-preview"></div>
+        </section>
+      </div>
+    </section>
+
+
+    <section id="imageScreen" class="screen">
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <h2>Ảnh hóa đơn</h2>
+            <p class="hint">Sau khi bấm "Tạo hình & lưu", ảnh hóa đơn sẽ hiện ở đây.</p>
+          </div>
+          <button id="closeImageFromTabBtn" class="ghost small">Ẩn ảnh</button>
+        </div>
+
+        <div id="savedImageEmpty" class="empty">Chưa có ảnh hóa đơn nào. Hãy tạo hình từ tab Hóa đơn hoặc tab Tháng mới.</div>
+
+        <div id="savedImageCard" class="image-output-card" style="display:none;">
+          <img id="savedInvoiceImageOutput" class="invoice-image-output" alt="Ảnh hóa đơn đã tạo" />
+          <a id="savedDownloadImageLink" class="primary image-download" download="hoa-don-tien-tro.png">Tải ảnh PNG</a>
+        </div>
+      </section>
+    </section>
+
+    <section id="historyScreen" class="screen">
+      <section class="card">
+        <div class="section-head">
+          <h2>Lịch sử hóa đơn</h2>
+          <div class="history-filter">
+            <select id="historyRoomSelect"></select>
+            <select id="historyMonth"></select>
+          </div>
+        </div>
+
+        <div id="historyList" class="history-list"></div>
+        <p id="emptyHistory" class="empty">Chưa có hóa đơn nào.</p>
+      </section>
+    </section>
+
+    <section id="backupScreen" class="screen">
+      <div class="grid two">
+        <section class="card">
+          <h2>Backup dữ liệu</h2>
+          <p class="hint">Dữ liệu nằm trong iPhone. Nên export backup định kỳ để tránh mất khi xóa Safari data hoặc đổi máy.</p>
+          <div class="button-row wrap">
+            <button id="exportBackupBtn" class="primary">Export backup .json</button>
+            <label class="file-btn">
+              Import backup .json
+              <input id="importBackupFile" type="file" accept="application/json" />
+            </label>
+          </div>
+        </section>
+
+        <section class="card danger-zone">
+          <h2>Vùng nguy hiểm</h2>
+          <p class="hint">Chỉ dùng khi muốn xóa toàn bộ phòng và hóa đơn trên máy này.</p>
+          <button id="clearAllDataBtn" class="danger">Xóa toàn bộ dữ liệu</button>
+        </section>
+      </div>
+    </section>
+  <footer class="app-footer">Created by <b>ThangVoDich</b></footer>
+  </main>
+
+  <section id="printArea" aria-hidden="true"></section>
+
+
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      var status = document.getElementById("onlineStatus");
+      if (status && status.textContent.trim() === "Đang kiểm tra...") {
+        status.textContent = navigator.onLine ? "Online" : "Offline";
+      }
+    });
+  </script>
+
+  <script src="app-v18.js?v=18"></script>
+</body>
+</html>

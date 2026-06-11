@@ -1,0 +1,925 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color: #0f172a;
+  background: #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --primary: #0f172a;
+  --primary-soft: #e2e8f0;
+  --border: #e5e7eb;
+  --muted: #64748b;
+  --danger: #dc2626;
+  --card: #ffffff;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(59,130,246,0.22), transparent 300px),
+    linear-gradient(180deg, #0f172a 0%, #1e293b 240px, #f1f5f9 240px);
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 24px 14px 60px;
+}
+
+.topbar {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(30px, 6vw, 48px);
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+h1 span {
+  font-size: 0.62em;
+  letter-spacing: -0.035em;
+  opacity: 0.88;
+}
+
+h2 {
+  font-size: 22px;
+  letter-spacing: -0.025em;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 18px 0 10px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  opacity: 0.75;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.sub {
+  color: rgba(255,255,255,0.78);
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.pill {
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 8px 11px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.tab {
+  border: 0;
+  background: rgba(255,255,255,0.12);
+  color: white;
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tab.active {
+  background: white;
+  color: #0f172a;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+}
+
+.grid.two {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.grid.compact {
+  gap: 10px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: 0 20px 50px rgba(15,23,42,0.08);
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+label {
+  display: block;
+  font-weight: 800;
+  margin: 13px 0 8px;
+}
+
+input, select, textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #0f172a;
+  border-radius: 14px;
+  padding: 13px 14px;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #0f172a;
+  box-shadow: 0 0 0 3px rgba(15,23,42,0.08);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.primary, .secondary, .ghost, .danger, .file-btn {
+  border: 0;
+  border-radius: 14px;
+  font-weight: 850;
+  padding: 13px 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+}
+
+.primary {
+  background: var(--primary);
+  color: white;
+}
+
+.secondary {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.ghost {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.small {
+  padding: 8px 10px;
+  min-height: unset;
+  font-size: 13px;
+}
+
+.full {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 150px auto;
+  gap: 8px;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.button-row.wrap {
+  flex-wrap: wrap;
+}
+
+.file-btn {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.file-btn input {
+  display: none;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.empty, .hint {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.room-list, .history-list {
+  display: grid;
+  gap: 10px;
+}
+
+.room-card, .history-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 14px;
+  background: #fbfdff;
+}
+
+.room-title, .history-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.room-title strong, .history-title strong {
+  font-size: 18px;
+}
+
+.room-meta, .history-meta {
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.room-actions, .history-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.fee-list {
+  display: grid;
+  gap: 8px;
+}
+
+.fee-item {
+  display: grid;
+  grid-template-columns: 1fr 140px auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.fee-item .name, .fee-item .amount {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 12px;
+}
+
+.invoice-preview {
+  border: 1px dashed #cbd5e1;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.invoice-paper {
+  padding: 20px;
+}
+
+.invoice-header {
+  text-align: center;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #0f172a;
+  margin-bottom: 14px;
+}
+
+.invoice-header h2 {
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.invoice-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  margin-bottom: 14px;
+  line-height: 1.55;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.invoice-table th,
+.invoice-table td {
+  border: 1px solid #d1d5db;
+  padding: 9px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.invoice-table th {
+  background: #f8fafc;
+}
+
+.invoice-table .money {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.total-row td {
+  font-weight: 900;
+  background: #f8fafc;
+  font-size: 17px;
+}
+
+.invoice-note {
+  margin-top: 14px;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.signature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 36px;
+  text-align: center;
+  gap: 20px;
+}
+
+.history-filter {
+  display: grid;
+  grid-template-columns: 180px 160px;
+  gap: 8px;
+}
+
+.danger-zone {
+  border: 1px solid #fecaca;
+}
+
+@media (max-width: 860px) {
+  .grid.two {
+    grid-template-columns: 1fr;
+  }
+
+  .input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .fee-item {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    flex-direction: column;
+  }
+
+  .history-filter {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .section-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  .button-row {
+    flex-direction: column;
+  }
+
+  .button-row > * {
+    width: 100%;
+  }
+
+  .invoice-info {
+    grid-template-columns: 1fr;
+  }
+
+  .invoice-paper {
+    padding: 14px;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+  }
+
+  .app {
+    display: none !important;
+  }
+
+  #printArea {
+    display: block !important;
+  }
+
+  .invoice-paper {
+    padding: 0;
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+}
+
+#printArea {
+  display: none;
+}
+
+
+.app-footer {
+  text-align: center;
+  color: #64748b;
+  padding: 18px 0 0;
+  font-size: 14px;
+}
+
+.section-head.flat {
+  margin-top: 18px;
+  margin-bottom: 8px;
+}
+
+.image-output-card {
+  margin-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 14px;
+}
+
+.invoice-image-output {
+  width: 100%;
+  max-width: 720px;
+  display: block;
+  margin: 12px auto;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  background: white;
+}
+
+.image-download {
+  text-decoration: none;
+  width: 100%;
+}
+
+.creator-line {
+  text-align: center;
+  margin-top: 18px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+
+.monthly-actions {
+  min-width: 190px;
+}
+
+.monthly-actions label {
+  margin-top: 0;
+}
+
+.no-top {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.monthly-list {
+  display: grid;
+  gap: 12px;
+}
+
+.monthly-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 14px;
+  background: #fbfdff;
+}
+
+.monthly-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.monthly-card-head strong {
+  font-size: 18px;
+}
+
+.monthly-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.monthly-field label {
+  margin: 0 0 7px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.monthly-readonly {
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 13px 14px;
+  min-height: 47px;
+}
+
+.monthly-total-box {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #f1f5f9;
+}
+
+.monthly-total {
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.monthly-warning {
+  color: #dc2626;
+  font-weight: 800;
+  font-size: 13px;
+  margin-top: 8px;
+  display: none;
+}
+
+@media (max-width: 920px) {
+  .monthly-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .monthly-actions {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .monthly-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .monthly-card-head {
+    flex-direction: column;
+  }
+}
+
+
+.monthly-source {
+  margin-top: 8px;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+
+.monthly-debug {
+  color: #64748b;
+  font-size: 14px;
+  margin: 8px 0 12px;
+}
+
+.single-action {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+
+select.month-select,
+#monthlyMonth,
+#invoiceMonth,
+#historyMonth {
+  appearance: auto;
+}
+
+
+/* Bản v10: tabs dễ nhìn hơn trên điện thoại */
+.tabs {
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding-top: 16px;
+  }
+
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    overflow: visible;
+    padding-bottom: 0;
+    margin-bottom: 16px;
+  }
+
+  .tab {
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 8px;
+    font-size: 15px;
+    line-height: 1.2;
+    border-radius: 18px;
+    text-align: center;
+    white-space: normal;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.14);
+  }
+
+  .tab.active {
+    background: #ffffff;
+    color: #0f172a;
+    border-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(15,23,42,0.12);
+  }
+
+  .topbar {
+    margin-bottom: 14px;
+  }
+
+  .pill {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 380px) {
+  .tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* Bản v11: nút/tab có viền rõ hơn trên điện thoại */
+.tab {
+  background: #334155;
+  color: #ffffff;
+  border: 2px solid #64748b;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10);
+}
+
+.tab.active {
+  background: #ffffff;
+  color: #0f172a;
+  border: 2px solid #0f172a;
+  box-shadow: 0 8px 18px rgba(15,23,42,0.18);
+}
+
+.primary {
+  border: 2px solid #0f172a;
+}
+
+.ghost, .secondary {
+  border: 2px solid #cbd5e1;
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.danger {
+  border: 2px solid #fecaca;
+}
+
+@media (max-width: 640px) {
+  .tabs {
+    background: rgba(15, 23, 42, 0.22);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 22px;
+    padding: 10px;
+  }
+
+  .tab {
+    background: #334155;
+    color: #ffffff;
+    border: 2px solid #94a3b8;
+    box-shadow: 0 4px 10px rgba(15,23,42,0.18);
+  }
+
+  .tab.active {
+    background: #ffffff;
+    color: #0f172a;
+    border: 2px solid #ffffff;
+    box-shadow: 0 8px 18px rgba(15,23,42,0.28);
+  }
+
+  .primary, .ghost, .secondary, .danger, .file-btn {
+    border-width: 2px;
+    border-style: solid;
+  }
+
+  .primary {
+    border-color: #0f172a;
+  }
+
+  .ghost, .secondary, .file-btn {
+    border-color: #cbd5e1;
+  }
+}
+
+
+/* Bản v12: bỏ khung đậm bao quanh 5 tab, giữ từng nút rõ ràng */
+@media (max-width: 640px) {
+  .tabs {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .tab {
+    border: 2px solid #cbd5e1 !important;
+  }
+
+  .tab.active {
+    border: 2px solid #ffffff !important;
+  }
+}
+
+.money-input {
+  text-align: left;
+}
+
+
+/* Bản v13: phí khác trong tab Tháng mới */
+.monthly-fees-box {
+  margin-top: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.monthly-fees-title {
+  font-weight: 850;
+  margin-bottom: 8px;
+}
+
+.monthly-fee-list {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 9px;
+}
+
+.monthly-fee-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.monthly-fee-name {
+  font-weight: 750;
+}
+
+.monthly-fee-amount {
+  color: #0f172a;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.monthly-fee-add {
+  display: grid;
+  grid-template-columns: 1fr 150px auto;
+  gap: 8px;
+}
+
+.monthly-fee-add input {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .monthly-fee-add {
+    grid-template-columns: 1fr;
+  }
+
+  .monthly-fee-row {
+    grid-template-columns: 1fr;
+  }
+
+  .monthly-fee-row button {
+    width: 100%;
+  }
+}
+
+
+/* Bản v14: tab ảnh hóa đơn riêng */
+.invoice-reminder {
+  margin-top: 24px;
+  padding: 14px 16px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  text-align: center;
+  color: #0f172a;
+  font-weight: 850;
+  background: #f8fafc;
+}
+
+#savedImageCard .invoice-image-output {
+  margin-top: 0;
+}
+
+
+/* Bản v15: wifi checkbox + reminder đậm */
+.wifi-box {
+  margin: 10px 0 14px;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  border-radius: 14px;
+}
+
+.check-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.check-line input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.monthly-wifi-box {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.invoice-reminder {
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+
+/* Bản v16: fix khoảng cách ảnh hóa đơn */
+.creator-line {
+  margin-top: 18px;
+}
+
+.invoice-reminder {
+  margin-bottom: 14px;
+}
