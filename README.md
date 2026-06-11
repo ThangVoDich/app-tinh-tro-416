@@ -160,3 +160,4 @@ Nên Export backup định kỳ.
 - Nguyên nhân: code còn gọi nút cũ `closeImageBtn` nhưng nút này đã bị bỏ khi chuyển ảnh hóa đơn sang tab riêng.
 - Không còn hiện alert lỗi khó chịu khi mở app.
 # app-tinh-tro-416
+# app-tinh-tro-416
