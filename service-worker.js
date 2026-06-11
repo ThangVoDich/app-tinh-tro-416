@@ -1,9 +1,9 @@
-const CACHE_NAME = "tinh-tien-tro-416-v26-invoice-reset-fix";
+const CACHE_NAME = "tinh-tien-tro-416-v27-transfer-content";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
-  "./app-v26.js?v=26",
+  "./app-v27.js?v=27",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
