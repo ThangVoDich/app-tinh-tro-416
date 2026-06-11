@@ -1,9 +1,9 @@
-const CACHE_NAME = "tinh-tien-tro-416-v18-startup-fix";
+const CACHE_NAME = "tinh-tien-tro-416-v26-invoice-reset-fix";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
-  "./app-v18.js?v=18",
+  "./app-v26.js?v=26",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"

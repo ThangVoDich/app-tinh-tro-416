@@ -16,7 +16,7 @@
       <div>
         <p class="eyebrow">PWA offline</p>
         <h1>App Tính Trọ<br><span>416 Phan Huy Ích</span></h1>
-        <p class="sub">Lưu theo số phòng, tên người thuê, lập hóa đơn theo tháng. Created by ThangVoDich. <b>Bản v18</b></p>
+        <p class="sub">Lưu theo số phòng, tên người thuê, lập hóa đơn theo tháng. Created by ThangVoDich. <b>Bản v26</b></p>
       </div>
       <span id="onlineStatus" class="pill">Đang kiểm tra...</span>
     </header>
@@ -26,6 +26,7 @@
       <button class="tab" data-screen="roomsScreen">Phòng</button>
       <button class="tab" data-screen="invoiceScreen">Hóa đơn</button>
       <button class="tab" data-screen="imageScreen">Ảnh hóa đơn</button>
+      <button class="tab" data-screen="paymentScreen">Thanh toán</button>
       <button class="tab" data-screen="historyScreen">Lịch sử</button>
       <button class="tab" data-screen="backupScreen">Backup</button>
     </nav>
@@ -206,6 +207,84 @@
         <div id="savedImageCard" class="image-output-card" style="display:none;">
           <img id="savedInvoiceImageOutput" class="invoice-image-output" alt="Ảnh hóa đơn đã tạo" />
           <a id="savedDownloadImageLink" class="primary image-download" download="hoa-don-tien-tro.png">Tải ảnh PNG</a>
+
+          <div id="qrPaymentCard" class="qr-payment-card" style="display:none;">
+            <h3>Quét QR để thanh toán</h3>
+            <div class="qr-payment-grid">
+              <img id="qrPaymentImage" class="qr-payment-image" alt="QR thanh toán VietQR" />
+              <div class="qr-payment-info">
+                <p><b>Ngân hàng:</b> <span id="qrBankName"></span></p>
+                <p><b>Số tài khoản:</b> <span id="qrAccountNo"></span></p>
+                <p><b>Chủ tài khoản:</b> <span id="qrAccountName"></span></p>
+                <p><b>Số tiền:</b> <span id="qrAmount"></span></p>
+                <p><b>Nội dung:</b> <span id="qrAddInfo"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+    <section id="paymentScreen" class="screen">
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <h2>Cài đặt thanh toán</h2>
+            <p class="hint">Thông tin này dùng để tạo VietQR theo đúng tổng tiền hóa đơn. Lưu trên máy này, không cần sửa code.</p>
+          </div>
+        </div>
+
+        <label>Chọn ngân hàng</label>
+        <select id="paymentBankSelect">
+          <option value="970436">Vietcombank (VCB)</option>
+          <option value="970422">MB Bank (MBBank)</option>
+          <option value="970415">VietinBank</option>
+          <option value="970418">BIDV</option>
+          <option value="970405">Agribank</option>
+          <option value="970407">Techcombank</option>
+          <option value="970416">ACB</option>
+          <option value="970423">TPBank</option>
+          <option value="970432">VPBank</option>
+          <option value="970403">Sacombank</option>
+          <option value="970441">VIB</option>
+          <option value="970426">MSB</option>
+          <option value="970448">OCB</option>
+          <option value="970414">OceanBank</option>
+          <option value="970429">SCB</option>
+          <option value="970443">SHB</option>
+          <option value="970431">Eximbank</option>
+          <option value="970406">DongA Bank</option>
+          <option value="970425">ABBANK</option>
+          <option value="970427">VietABank</option>
+          <option value="__custom__">Ngân hàng khác / tự nhập</option>
+        </select>
+        <p id="bankSelectHint" class="hint">Bấm vào ô ngân hàng để hiện danh sách chọn. Nếu không có ngân hàng cần dùng, chọn Ngân hàng khác / tự nhập.</p>
+
+        <label>Mã ngân hàng VietQR</label>
+        <input id="paymentBankId" type="text" placeholder="Tự điền nếu chọn Ngân hàng khác" />
+
+        <label>Tên ngân hàng hiển thị</label>
+        <input id="paymentBankName" type="text" placeholder="VD: VCB" />
+
+        <label>Số tài khoản</label>
+        <input id="paymentAccountNo" type="text" inputmode="numeric" placeholder="VD: 1031514285" />
+
+        <label>Tên chủ tài khoản</label>
+        <input id="paymentAccountName" type="text" placeholder="VD: NGUYEN BAO THANG" />
+
+        <p class="hint payment-example">
+          Gợi ý: chọn ngân hàng trong danh sách là app tự điền mã VietQR. Nếu không có ngân hàng cần dùng, chọn <b>Ngân hàng khác</b> rồi tự nhập mã BIN/VietQR.
+        </p>
+
+        <div class="button-row wrap">
+          <button id="savePaymentSettingsBtn" class="primary">Lưu tài khoản thanh toán</button>
+          <button id="resetPaymentSettingsBtn" class="ghost">Khôi phục mặc định</button>
+        </div>
+
+        <div class="payment-current">
+          <h3>Đang dùng</h3>
+          <p id="paymentCurrentInfo" class="hint"></p>
         </div>
       </section>
     </section>
@@ -261,6 +340,6 @@
     });
   </script>
 
-  <script src="app-v18.js?v=18"></script>
+  <script src="app-v26.js?v=26"></script>
 </body>
 </html>
